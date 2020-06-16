@@ -14,6 +14,7 @@ type AppConfig struct {
 	JS               string
 	CSS              string
 	Colour           string
+	LogLevel         string
 	Resizable        bool
 	DisableInspector bool
 }
@@ -78,6 +79,9 @@ func (a *AppConfig) merge(in *AppConfig) error {
 	if in.JS != "" {
 		a.JS = in.JS
 	}
+	if in.LogLevel != "" {
+		a.LogLevel = in.LogLevel
+	}
 
 	if in.Width != 0 {
 		a.Width = in.Width
@@ -97,6 +101,7 @@ func newConfig(userConfig *AppConfig) (*AppConfig, error) {
 		Width:     800,
 		Height:    600,
 		Resizable: true,
+		LogLevel:  "debug",
 		Title:     "My Wails App",
 		Colour:    "#FFF", // White by default
 		HTML:      mewn.String("./runtime/assets/default.html"),

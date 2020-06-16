@@ -44,7 +44,6 @@ func CreateApp(optionalConfig ...*AppConfig) *App {
 	}
 
 	result := &App{
-		logLevel:       "debug",
 		renderer:       renderer.NewWebView(),
 		ipc:            ipc.NewManager(),
 		bindingManager: binding.NewManager(),
@@ -55,6 +54,9 @@ func CreateApp(optionalConfig ...*AppConfig) *App {
 	appconfig, err := newConfig(userConfig)
 	if err != nil {
 		result.log.Fatalf("Cannot use custom HTML: %s", err.Error())
+	}
+	if appconfig != nil {
+		result.logLevel = appconfig.LogLevel
 	}
 	result.config = appconfig
 
@@ -79,7 +81,6 @@ func (a *App) Run() error {
 		return a.cli.Run()
 	}
 
-	a.logLevel = "error"
 	err := a.start()
 	if err != nil {
 		a.log.Error(err.Error())

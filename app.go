@@ -88,6 +88,10 @@ func (a *App) Run() error {
 	return err
 }
 
+func (a *App) GetRuntime() *Runtime {
+	return a.runtime.(*Runtime)
+}
+
 func (a *App) start() error {
 
 	// Set the log level
